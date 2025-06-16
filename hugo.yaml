@@ -1,4 +1,4 @@
-baseURL: "http://localhost/"
+baseURL: "https://massilait.github.io/blog/"
 title: "Home"
 theme: ["PaperMod"]
 

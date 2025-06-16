@@ -2,23 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost/tags/beginner/</loc>
+    <loc>https://massilait.github.io/blog/tags/beginner/</loc>
     <lastmod>2025-06-15T12:00:00-04:00</lastmod>
   </url><url>
-    <loc>http://localhost/</loc>
+    <loc>https://massilait.github.io/blog/</loc>
     <lastmod>2025-06-15T12:00:00-04:00</lastmod>
   </url><url>
-    <loc>http://localhost/posts/computers_explained/</loc>
+    <loc>https://massilait.github.io/blog/posts/computers_explained/</loc>
     <lastmod>2025-06-15T12:00:00-04:00</lastmod>
   </url><url>
-    <loc>http://localhost/posts/</loc>
+    <loc>https://massilait.github.io/blog/posts/</loc>
     <lastmod>2025-06-15T12:00:00-04:00</lastmod>
   </url><url>
-    <loc>http://localhost/tags/</loc>
+    <loc>https://massilait.github.io/blog/tags/</loc>
     <lastmod>2025-06-15T12:00:00-04:00</lastmod>
   </url><url>
-    <loc>http://localhost/about/</loc>
+    <loc>https://massilait.github.io/blog/about/</loc>
   </url><url>
-    <loc>http://localhost/categories/</loc>
+    <loc>https://massilait.github.io/blog/categories/</loc>
   </url>
 </urlset>
