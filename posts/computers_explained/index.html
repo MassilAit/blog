@@ -302,7 +302,7 @@
 <p>Abstraction is the idea of simplifying complexity by hiding the details you don’t need to see. For example, you can use Microsoft Office without knowing how it was programmed. You trust that the software works and focus only on what it lets you do. That’s abstraction: treating a complex system as a simple tool by relying on the work done underneath it.</p>
 <p>In computer science, we apply abstraction at every level. Each layer is built on top of the previous one, using it without needing to fully understand or re-implement it. A software engineer doesn’t have to think about individual transistors, just like you don’t have to think about the programming language used to build Microsoft Office. This is how we manage complexity. It’s also how progress happens, each generation builds on the work of those before. As the saying goes, we are standing on the shoulders of giants.</p>
 <p>In the rest of this post, we will explore the key levels of abstraction that make modern computers possible. We’ll start at the very bottom, with sand and electrons and work our way up to the software you use every day. The figure bellow shows the diffrent levels of abstraction that we are going to explore.</p>
-<p><img loading="lazy" src="images/computers_explained/abstraction_layer.png"></p>
+<p><img loading="lazy" src="/blog/images/computers_explained/abstraction_layer.png"></p>
 <h1 id="structuring-the-journey">Structuring the Journey<a hidden class="anchor" aria-hidden="true" href="#structuring-the-journey">#</a></h1>
 <p>At first, the plan seems simple: just climb the abstraction ladder step by step, and we’ll understand how computers work. That approach is valid, but it has a downside. Many things happening at lower levels of abstraction can feel random or disconnected if we don’t first understand how they will be used later on.</p>
 <p>To make the learning process as smooth as possible, we’ll use a different strategy.</p>
@@ -328,7 +328,7 @@
 <p>The answer lies in how our eyes work. Our vision is based on sensitivity to three primary colors: red, green, and blue. Every color we perceive is just a mix of these three. Computers take advantage of this by representing each color as a combination of red, green, and blue values, this is called RGB color.</p>
 <p>To display an image, the computer divides the screen into a grid of very small squares, called pixels. Each pixel is one solid color. By carefully choosing the RGB value for each pixel, the computer can display any image. For example, a resolution like 720p or 1080p refers to the number of pixels in the image, 720p typically means 1280(width) × 720(height) pixels.</p>
 <p>If you zoom in enough on a screen, you can actually see the individual RGB components of each pixel. The image below shows what pixels look like close up, three vertical strips of red, green, and blue per pixel.</p>
-<img src="images/computers_explained/pixels.jpg" alt="Alt text" width="50%" style="display: block; margin: auto; padding-bottom: 20px;">
+<img src="/blog/images/computers_explained/pixels.jpg" alt="Alt text" width="50%" style="display: block; margin: auto; padding-bottom: 20px;">
 <p>Now, how does the computer communicate this to the screen? It’s pretty simple. Each of the red, green, and blue values is represented by a number between 0 and 255:</p>
 <ul>
 <li>0 means the color is completely off,</li>
@@ -372,7 +372,7 @@
 </ul>
 <p>So in summary: computers execute algorithms, and we use programming languages to describe those algorithms in a way the computer can follow.</p>
 <h2 id="compiler">Compiler<a hidden class="anchor" aria-hidden="true" href="#compiler">#</a></h2>
-<p><img loading="lazy" src="images/computers_explained/binary.png"></p>
+<p><img loading="lazy" src="/blog/images/computers_explained/binary.png"></p>
 <p>This is the point in the abstraction stack where we make one of the biggest leaps. From here on, we get closer to how the machine actually works. Most software engineers never have to go deeper than this.</p>
 <p>Until now, we haven’t mentioned the famous “ones and zeros” that people often associate with computers. We’ve said that programming languages allow us to communicate instructions (algorithms) to the machine, but those languages are still human-readable. A developer can look at a snippet of code and understand what it’s doing as long as they know the language.</p>
 <p>But the truth is, computers don’t understand programming languages directly. What they do understand is binary: a sequence of ones and zeros. In reality, these 1s and 0s are implemented as electrical signals, typically, current flowing represents a 1, and no current represents a 0. We’ll dive into the physical meaning of that later when we get into hardware and theory.</p>
@@ -385,7 +385,7 @@
 <p>So in short: The operating system is a special program that manages the computer’s hardware and helps other programs run smoothly.
 In the next sections, we’ll switch gears. We’ll go back to the lowest layers, the physical and logical foundations and climb back up from there to see how it all connects.</p>
 <h1 id="theory-and-hardware">Theory and Hardware<a hidden class="anchor" aria-hidden="true" href="#theory-and-hardware">#</a></h1>
-<p><img loading="lazy" src="images/computers_explained/hardware.jpg"></p>
+<p><img loading="lazy" src="/blog/images/computers_explained/hardware.jpg"></p>
 <h2 id="introduction-1">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction-1">#</a></h2>
 <p>Until now, we’ve mostly looked at how we talk to the computer through programming languages, compilers, and operating systems. But we haven’t yet answered the deeper question: how does the computer actually do what we tell it to do? We said that computers are algorithmic machines. They follow a list of instructions written in a programming language, compiled into machine code (a binary file) that the computer can understand. But the real mystery is this: how can a computer do so much using only ones and zeros? That’s where the magic really starts.</p>
 <p>In the next sections, we’ll dig into how a computer can take a series of ones and zeros and perform all kinds of operations on them. To understand this, we’ll first explore the mathematical foundation behind computing: Boolean algebra. From there, we’ll see how we can build electrical circuits that implement Boolean logic using a basic electronic component called the transistor. Then we’ll show how simple logic gates can be combined into more complex circuits that can do meaningful work like arithmetic, memory storage, and decision-making.</p>
@@ -481,7 +481,7 @@ $$L = S  ∨ (S ∧ D)$$</p>
 <p>If a current is applied to the control pin, the transistor allows current to flow from input to output. If there&rsquo;s no current at the control pin, the input is disconnected from the output. Transistors are possibly the most produced object in human history. Modern high-end computer chips contain billions of them, and we manufacture trillions every year.</p>
 <p>Now, you might already sense a connection: transistors act like binary switches, and Boolean algebra is all about binary logic. That’s exactly what we’re going to explore in the next section — how we can use transistors to physically implement logic gates and turn Boolean expressions into working circuits.</p>
 <h2 id="logic-gates">Logic gates<a hidden class="anchor" aria-hidden="true" href="#logic-gates">#</a></h2>
-<p><img loading="lazy" src="images/computers_explained/gates.png"></p>
+<p><img loading="lazy" src="/blog/images/computers_explained/gates.png"></p>
 <p>Now that we’ve covered the background theory, we’re ready to tackle the first real brick of computing: logic gates. Remember our basic Boolean operations: NOT, AND, and OR? Well, we can implement these operations physically using transistors! That means Boolean algebra is not just abstract math anymore, it becomes something we can build with.</p>
 <p>Once we can physically represent NOT, AND, and OR, we can construct all kinds of useful circuits. For example, take a simple rule like: “If signal A and signal B are on, then do C.” We now have a way to build a circuit that behaves exactly like that.</p>
 <p>Just a side note to highlight why transistors were such a revolutionary invention: The very first computers didn’t use transistors, they used vacuum tubes. These also acted like binary switches, but they were big, expensive, and unreliable. When transistors came along, they allowed for miniaturization (so computers could be smaller), more switches (so they could be more powerful), and better reliability. Transistors enabled the explosion of modern computing and helped shape the digital world we live in today.</p>
@@ -538,7 +538,7 @@ $$L = S  ∨ (S ∧ D)$$</p>
 <p>One important note: not all memory in computers is built from just logic gates. Many memory systems are actually built from other electrical components especially those designed for large capacity. Logic gate-based memory is used where speed is critical but in counterpart they can’t store large binary value.</p>
 <p>With arithmetic, logic, and memory circuits in place, we now have all the core components we need to build a basic computer. That’s exactly what we’ll explore in the next section.</p>
 <h2 id="cpu-and-memory">Cpu and memory<a hidden class="anchor" aria-hidden="true" href="#cpu-and-memory">#</a></h2>
-<p><img loading="lazy" src="images/computers_explained/cpu.jpg"></p>
+<p><img loading="lazy" src="/blog/images/computers_explained/cpu.jpg"></p>
 <p>We’re almost done! Now we’re at the middle layer, where everything comes together. Earlier, we talked about how we tell a computer what to do. To make a program like Microsoft Word, we break it down into a set of algorithms, precise and unambiguous instructions that describe exactly what to do in each situation. We use programming languages to write these algorithms in a structured way that the computer can eventually understand.</p>
 <p>Then we saw that the computer only understands ones and zeros, so a special program, the compiler, converts our human-readable code into binary machine code.</p>
 <p>In the last sections, we saw that we can build circuits that can perform all kinds of operations on binary numbers. Now, we just need to bring those two worlds together and that’s exactly what we’ll do here.</p>
