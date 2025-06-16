@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Home</title>
+    <link>http://localhost/</link>
+    <description>Recent content on Home</description>
+    <generator>Hugo -- 0.147.8</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 15 Jun 2025 12:00:00 -0400</lastBuildDate>
+    <atom:link href="http://localhost/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How Computers Work: From Sand to Microsoft Word</title>
+      <link>http://localhost/posts/computers_explained/</link>
+      <pubDate>Sun, 15 Jun 2025 12:00:00 -0400</pubDate>
+      <guid>http://localhost/posts/computers_explained/</guid>
+      <description>An approachable explanation of how computers are built, from basic materials to modern applications.</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>http://localhost/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost/about/</guid>
+      <description>&lt;div style=&#34;display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 600px; margin: auto;&#34;&gt;
+&lt;img src=&#34;http://localhost/images/me.jpg&#34; alt=&#34;Ottman&#34; width=&#34;300&#34; style=&#34;border-radius: 50%; margin-bottom: 1rem;&#34;&gt;
+&lt;p&gt;Hi! I’m Massil 👋&lt;br&gt;
+I&amp;rsquo;m a 4th-year electrical engineering student at Polytechnique Montréal. I&amp;rsquo;m deeply passionate about technology, with a strong love for math and computer science. Lately, I&amp;rsquo;ve been focusing on hardware acceleration for AI, but I enjoy exploring nearly every field within electrical engineering.&lt;/p&gt;
+&lt;/div&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;some-of-my-recent-projects&#34;&gt;Some of my recent projects:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/MassilAit/BlazeFace_FPGA&#34;&gt;BlazeFace Neural Network Accelerator on PYNQ FPGA&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/MassilAit/Mini-Risc-V-processor&#34;&gt;Mini RISC-V Implementation in VHDL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Speed measurement system using the Doppler effect&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>
