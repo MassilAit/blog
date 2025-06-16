@@ -1,0 +1,52 @@
+baseURL: "http://localhost/"
+title: "Home"
+theme: ["PaperMod"]
+
+pagination:
+  pagerSize: 10
+
+params:
+  env: development
+  description: "Projects, AI, Hardware and How Computers Work"
+  defaultTheme: Light
+  math: true
+  ShowToc: true      
+  TocOpen: false       
+  showReadingTime: true
+  homeInfoParams:
+    Title: "Welcome to My Blog 👋"
+    Content: "This is still an early version of the blog, but for now I’ll mainly post about computer science and electrical engineering concepts I find interesting. I’ll try to post every few weeks. The technical depth of each post will vary; some will be beginner-friendly, while others may focus on more advanced topics. I created this blog to share the cool ideas I come across during my studies. Enjoy the read!"
+
+  socialIcons:
+    - name: github
+      url: https://github.com/MassilAit
+    - name: linkedin
+      url: "https://www.linkedin.com/in/massilait/"
+    - name: email
+      url: "mailto:massil.ait-abdeslam@polymtl.ca"
+
+  assets:
+    customCSS: ["css/extended/fix-home-center.css"]
+
+  ShowRecentPosts: true
+
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+    
+
+menu:
+  main:
+    - identifier: posts
+      name: Posts
+      url: /posts/
+      weight: 1
+
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 2
+
+
