@@ -1,1 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Beginner on Home</title><link>https://massilait.github.io/blog/tags/beginner/</link><description>Recent content in Beginner on Home</description><generator>Hugo -- 0.147.8</generator><language>en</language><lastBuildDate>Sun, 15 Jun 2025 12:00:00 -0400</lastBuildDate><atom:link href="https://massilait.github.io/blog/tags/beginner/index.xml" rel="self" type="application/rss+xml"/><item><title>How Computers Work: From Sand to Microsoft Word</title><link>https://massilait.github.io/blog/posts/computers_explained/</link><pubDate>Sun, 15 Jun 2025 12:00:00 -0400</pubDate><guid>https://massilait.github.io/blog/posts/computers_explained/</guid><description>An approachable explanation of how computers are built, from basic materials to modern applications.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Beginner on Home</title>
+    <link>https://massilait.github.io/blog/tags/beginner/</link>
+    <description>Recent content in Beginner on Home</description>
+    <generator>Hugo -- 0.147.8</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 15 Jun 2025 12:00:00 -0400</lastBuildDate>
+    <atom:link href="https://massilait.github.io/blog/tags/beginner/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How Computers Work: From Sand to Microsoft Word</title>
+      <link>https://massilait.github.io/blog/posts/computers_explained/</link>
+      <pubDate>Sun, 15 Jun 2025 12:00:00 -0400</pubDate>
+      <guid>https://massilait.github.io/blog/posts/computers_explained/</guid>
+      <description>An approachable explanation of how computers are built, from basic materials to modern applications.</description>
+    </item>
+  </channel>
+</rss>
