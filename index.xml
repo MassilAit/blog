@@ -21,8 +21,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://massilait.github.io/blog/about/</guid>
       <description>&lt;div style=&#34;display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 600px; margin: auto;&#34;&gt;
-&lt;p&gt;&amp;lt;img src=&amp;quot;{{ &amp;ldquo;/images/me.jpg&amp;rdquo; | relURL }}&amp;quot; alt=&amp;ldquo;massil&amp;rdquo;
-width=&amp;ldquo;300&amp;rdquo; style=&amp;ldquo;border-radius:50%;margin-bottom:1rem;&amp;quot;&amp;gt;&lt;/p&gt;
+&lt;img src=&#34;https://massilait.github.io/blog/images/me.jpg&#34; alt=&#34;Ottman&#34; width=&#34;300&#34; style=&#34;border-radius: 50%; margin-bottom: 1rem;&#34;&gt;
 &lt;p&gt;Hi! I’m Massil 👋&lt;br&gt;
 I&amp;rsquo;m a 4th-year electrical engineering student at Polytechnique Montréal. I&amp;rsquo;m deeply passionate about technology, with a strong love for math and computer science. Lately, I&amp;rsquo;ve been focusing on hardware acceleration for AI, but I enjoy exploring nearly every field within electrical engineering.&lt;/p&gt;
 &lt;/div&gt;
