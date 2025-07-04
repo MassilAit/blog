@@ -85,7 +85,7 @@ The aim of machine learning is to approximate such a function, given enough pair
 
 In the next section, we’ll explore our first machine learning model: the linear function.
 
-# Linear Approximation
+# Linear regression
 
 We said earlier that we want to learn an arbitrary complex function, so why are we starting with the simplest possible function, the linear function:
 
@@ -93,7 +93,7 @@ $$f(x)=w \cdot x+b$$
 
 That’s a good question. The reason is that this simple example helps us build the tools and intuition we need, which can then be scaled up to more powerful and flexible function approximators, like neural networks.
 
-The idea behind linear approximation is as follows: given a problem, we assume that the output is linearly correlated to the input, meaning it’s just a matter of scaling and shifting the input to get the output. Our task is to find the scaling factor $w$ and the shifting term $b$ that best describe the relationship between $X$ and $Y$.
+The idea behind linear regression is as follows: given a problem, we assume that the output is linearly correlated to the input, meaning it’s just a matter of scaling and shifting the input to get the output. Our task is to find the scaling factor $w$ and the shifting term $b$ that best describe the relationship between $X$ and $Y$.
 
 Of course, this is a strong assumption that often doesn’t hold in practice. For example, in our dog recognition problem, this would mean assuming that if we sum each pixel in the image (weighted) and shift the result by a certain amount, we’d get a number directly correlated with whether or not the image contains a dog. More concretely: if this number is larger than a certain threshold, the image contains a dog; otherwise, it doesn’t. This is a classification problem, where the goal isn’t to predict a real number but to decide if an input belongs to a particular class. To achieve this, we apply a mathematical trick: we set a threshold to divide the output space into two halves, one for each class. This approach is formalized in a method called [logistic regression](https://en.wikipedia.org/wiki/Logistic_regression).
 We can express this idea as:
@@ -280,13 +280,13 @@ At the end of this process (after 10 repeat), we have a curve that fits our data
 
 So, in summary: without explicitly telling the computer anything about the task of predicting the price of a house based on its size, we developed an algorithm that can automatically learn the correct relationship between the input and output data. We’ve built a general algorithm that allows a computer to discover patterns in the data on its own, quite impressive!
 
-### Limitation 
+## Limitation 
 
 We saw that our model performed quite well on the dataset, but we made two really big assumptions that won’t hold for more complex tasks:
 1.	We assumed a single input function, where the price depended only on the size of the house.
 2.	We assumed a linear correlation between the input and the output.
 
-#### Number of inputs 
+### Number of inputs 
 
 The first assumption was made mainly to simplify the visualization and explanation, but we can easily generalize what we did to multiple-input linear functions by writing:
 
@@ -301,7 +301,7 @@ For example, we could include additional inputs such as:
 
 Hopefully, this additional data will make our model better. That’s why data is crucial in machine learning, the more high-quality data you have, the better your model can learn. More data gives the model a finer understanding of the world and allows it to capture more nuanced patterns.
 
-#### Linearity
+### Linearity
 
 This is the biggest assumption we made. Even though many phenomena are approximately linear, many others are not. For example, our dog detection problem is clearly not linear, the presence or absence of a dog in an image is not linearly dependent on the pixel values. The relationship is far more subtle and complex.
 
