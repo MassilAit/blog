@@ -18,13 +18,13 @@ The first question is: what is AI? AI stands for artificial intelligence, but it
 
 AI is not at all a new field, it has been a topic of study since the early days of computing in the 1950s. While the history of AI is fascinating, this post will focus more on some key techniques and how they work. If you’re interested in the story of how AI evolved, you can read this other [post](https://www.tableau.com/data-insights/ai/history).
 
-For the rest of this serie, we’ll focus on one topic that has dominated the AI world in recent years: neural networks.
+In this series, we’ll focus on one topic that has dominated the AI world in recent years: neural networks. Today, our goal is to build the foundation behind neural networks. We’ll start with a simpler model, linear regression, and then explain how neural networks generalize this model into something much more powerful.
 
-# Traditional AI vs Machine Learning 
-
-## Traditional AI 
+# Traditional AI vs Machine Learning
 
 Without diving too deeply into details, one of the biggest milestones in the history of AI was when IBM’s computer Deep Blue defeated the world chess champion Garry Kasparov in 1997. In this section, I want to explore the fundamental difference between how Deep Blue worked compared to modern AI.
+
+## Traditional AI 
 
 Deep Blue was a computer program explicitly designed to play chess. At the time, chess programs were much weaker than top human players, even good amateurs could often beat them. Although computers are extremely fast at computation, chess has so many possible positions that it’s impossible for a computer to explore every possible outcome of the game from a given position. To play chess well, you need intuition about which positions are good and which are bad, something very hard to program, because computers only follow strict instructions and don’t “think” on their own.
 
@@ -34,6 +34,7 @@ Here’s how Deep Blue tackled this problem. At any given position, Deep Blue wo
 
 
 So you need a way to evaluate whether a position at a certain point in the tree is good or bad. This is exactly what Deep Blue did. Professional chess players and programmers worked together to craft a function that evaluated how good a position was. For example, one component of that evaluation function was the number of pieces: the more pieces you have compared to your opponent, the better. Other components accounted for the strength of a piece’s position on the board, some squares are strategically powerful, others are weak, etc.
+
 In summary, Deep Blue explored millions of possible positions up to a certain depth and chose the move that led to the most advantageous position according to its evaluation function. The algorithm it used is called minimax, which has additional refinements that I won’t cover here, but this is the core idea: the programmers did the reasoning in advance, translating chess knowledge into rules and a scoring function. This is the hard part, being able to translate complex reasoning into a list of clear instructions. 
 
 What made Deep Blue powerful was not that it “understood” chess better than Kasparov, in fact, its ability to evaluate positions was worse. Its strength came from being able to calculate and evaluate millions of positions per second, something no human could match. While Kasparov could evaluate a position at a depth of 3-4 moves, Deep Blue could reach 8 moves. 
@@ -43,7 +44,7 @@ What made Deep Blue powerful was not that it “understood” chess better than 
 You may have already guessed that explicitly translating the reasoning process of a complex task into a clear list of instructions that a computer can understand is extremely challenging and it greatly limits the number of applications where AI can be used.
 
 Take a seemingly simple task: determining whether an image contains a dog. As a human, you can recognize a dog by its eyes, ears, tail, fur, and overall shape. You can extract these features from an image and associate them with the concept of a dog. But in real life, dogs come in many different shapes, sizes, and colors. In an image, they can appear at different positions, angles, lighting conditions, and even partially hidden. This makes it very difficult to translate our pattern recognition strategy into a clear and deterministic set of rules that a computer can follow.
-This is where machine learning becomes useful. A funny example is determining whether an image contains a chihuahua or a muffin, a task that can get really challenging for a computer.
+This is where machine learning becomes useful. Another funny example to illustrate how difficult it is is determining whether an image contains a chihuahua or a muffin, a task that can get really challenging for a computer.
 
 <img src="/blog/images/ai_explained_part1/dog.jpeg" alt="Alt text" width="80%" style="display: block; margin: auto; padding-bottom: 20px">
 
@@ -55,7 +56,7 @@ All we need is an algorithm that is capable of learning a task from data. Crucia
 For example, instead of telling the machine what features to look for in an image to determine if it contains a dog, we simply give it a large dataset of images, labeled as “dog” or “no dog,” and let it learn on its own what patterns in the images correspond to the presence of a dog. We can also train this model to learn if a cat is in an image, or a car, just by giving it different data, our model is really generalizable. 
 Of course, this is easier said than done! In the rest of this post, we’ll explore how this is actually achieved. One of the most powerful approaches today is through neural networks, which we’ll build up to step by step.
 
-> **💡 Note — Supervised vs Unsupervised Learning :**
+> **💡 Note - Supervised vs Unsupervised Learning :**
 >
 >There are two main types of machine learning algorithms: supervised and unsupervised. Supervised models use data that is labeled, for example, in the dog recognition task, the images fed to the model are labeled as “dog” or “not dog.” Unsupervised learning, on the other hand, refers to models that work with raw, unlabeled data and try to discover patterns or structure within it. In the rest of this post, we’ll focus only on supervised learning. 
 >
@@ -83,7 +84,7 @@ We know this function exists because we, as humans, can perform this task oursel
 
 The aim of machine learning is to approximate such a function, given enough pairs of input and output data. We define a data point as a pair $(X,Y)$, where $X$ is the input and $Y$ is the output.
 
-In the next section, we’ll explore our first machine learning model: the linear function.
+In the next section, we’ll explore our first machine learning model: the linear regression.
 
 # Linear regression
 
@@ -128,7 +129,7 @@ I chose some fictitious data points. We can plot them on a graph and clearly see
 
 <img src="/blog/images/ai_explained_part1/house_size_vs_price.png" alt="Alt text" width="80%" style="display: block; margin: auto; padding-bottom: 20px">
 
-Now, our goal is to find an algorithm that can determine the best w and b to fit the data and make good predictions.
+Now, our goal is to find an algorithm that can determine the best $w$ and $b$ to fit the data and make good predictions.
 
 ## The algorithm
 
@@ -155,7 +156,7 @@ We can then compute the error, or how poorly the curve fits the data, by summing
 
 $$\frac{1}{N}\sum_{i=1}^{N}\text{distance}_i$$
 
-Where $N$ is the number of data points. 
+Where $N$ is the number of data points and $\text{distance}_i$ the distance between the true value $Y_i$ and the predicted value $\hat{Y_i}$. 
 
 This gives us a quantitative measure of how well the curve fits the data: the smaller the error, the better the fit. But how exactly should we define this “distance”?
 
