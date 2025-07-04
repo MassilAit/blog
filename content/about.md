@@ -9,7 +9,7 @@ layout: "about"
 <div style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 600px; margin: auto;">
 
 
-<img src="/images/me.jpg" alt="Ottman" width="300" style="border-radius: 50%; margin-bottom: 1rem;">
+<img src="/blog/images/me.jpg" alt="Ottman" width="300" style="border-radius: 50%; margin-bottom: 1rem;">
 
 Hi! I’m Massil 👋  
 I'm a 4th-year electrical engineering student at Polytechnique Montréal. I'm deeply passionate about technology, with a strong love for math and computer science. Lately, I've been focusing on hardware acceleration for AI, but I enjoy exploring nearly every field within electrical engineering.

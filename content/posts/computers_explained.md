@@ -30,7 +30,7 @@ In computer science, we apply abstraction at every level. Each layer is built on
 
 In the rest of this post, we will explore the key levels of abstraction that make modern computers possible. We’ll start at the very bottom, with sand and electrons and work our way up to the software you use every day. The figure bellow shows the diffrent levels of abstraction that we are going to explore. 
 
-![](/images/computers_explained/abstraction_layer.png)
+![](/blog/images/computers_explained/abstraction_layer.png)
 
 # Structuring the Journey
 
@@ -62,7 +62,7 @@ To display an image, the computer divides the screen into a grid of very small s
 
 If you zoom in enough on a screen, you can actually see the individual RGB components of each pixel. The image below shows what pixels look like close up, three vertical strips of red, green, and blue per pixel.
 
-<img src="/images/computers_explained/pixels.jpg" alt="Alt text" width="50%" style="display: block; margin: auto; padding-bottom: 20px;">
+<img src="/blog/images/computers_explained/pixels.jpg" alt="Alt text" width="50%" style="display: block; margin: auto; padding-bottom: 20px;">
 
 Now, how does the computer communicate this to the screen? It’s pretty simple. Each of the red, green, and blue values is represented by a number between 0 and 255:
 
@@ -126,7 +126,7 @@ So in summary: computers execute algorithms, and we use programming languages to
 
 ## Compiler
 
-![](/images/computers_explained/binary.png)
+![](/blog/images/computers_explained/binary.png)
 
 This is the point in the abstraction stack where we make one of the biggest leaps. From here on, we get closer to how the machine actually works. Most software engineers never have to go deeper than this.
 
@@ -151,7 +151,7 @@ In the next sections, we’ll switch gears. We’ll go back to the lowest layers
 
 # Theory and Hardware
 
-![](/images/computers_explained/hardware.jpg)
+![](/blog/images/computers_explained/hardware.jpg)
 
 ## Introduction
 
@@ -172,7 +172,8 @@ Boolean algebra introduces three basic logical operations:
 
 These operations let us express logic formally. They take binary input (1 or 0) and give a binary output. The behavior of these logic operations is often shown using something called a truth table, a table that lists all possible input combinations and their corresponding output. The truth table for the 3 basic operations are shown bellow:
 
-<div style="display: flex; justify-content: center; flex-wrap: nowrap; gap: 1.5rem; font-size: 14px;">
+<div style="overflow-x: auto;">
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; font-size: 14px;">
 
   <div style="flex: 0 0 auto;">
     <table border="1" style="min-width: 100px; border-collapse: collapse;">
@@ -229,7 +230,7 @@ These operations let us express logic formally. They take binary input (1 or 0) 
   </div>
 
 </div>
-
+</div>
 So this is what each operation does:
 
 - NOT flips the input (0 becomes 1, and 1 becomes 0).
@@ -268,7 +269,7 @@ If a current is applied to the control pin, the transistor allows current to flo
 Now, you might already sense a connection: transistors act like binary switches, and Boolean algebra is all about binary logic. That’s exactly what we’re going to explore in the next section — how we can use transistors to physically implement logic gates and turn Boolean expressions into working circuits.
 
 ## Logic gates
-![](/images/computers_explained/gates.png)
+![](/blog/images/computers_explained/gates.png)
 
 Now that we’ve covered the background theory, we’re ready to tackle the first real brick of computing: logic gates. Remember our basic Boolean operations: NOT, AND, and OR? Well, we can implement these operations physically using transistors! That means Boolean algebra is not just abstract math anymore, it becomes something we can build with.
 
@@ -294,7 +295,8 @@ $$ 4×10^2+ 3×10^1+ 7×10^0 $$
 
 In binary (base 2), we use only the digits 0 and 1. The exact same principle applies, but we use powers of 2 instead of 10. So a binary number like 1011 means:
 
-$$1×2^3+ 0×2^2+ 1×2^1+ 1×2^0= 8 + 0 + 2 + 1 = 11$$
+$$1×2^3+ 0×2^2+ 1×2^1+ 1×2^0$$
+$$= 8 + 0 + 2 + 1 = 11$$
 
 The table below shows the binary representation of the first 8 decimal numbers:
 
@@ -352,7 +354,7 @@ With arithmetic, logic, and memory circuits in place, we now have all the core c
 
 ## Cpu and memory
 
-![](/images/computers_explained/cpu.jpg)
+![](/blog/images/computers_explained/cpu.jpg)
 
 We’re almost done! Now we’re at the middle layer, where everything comes together. Earlier, we talked about how we tell a computer what to do. To make a program like Microsoft Word, we break it down into a set of algorithms, precise and unambiguous instructions that describe exactly what to do in each situation. We use programming languages to write these algorithms in a structured way that the computer can eventually understand.
 

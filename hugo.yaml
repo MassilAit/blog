@@ -26,6 +26,7 @@ params:
       url: "mailto:massil.ait-abdeslam@polymtl.ca"
 
   assets:
+    disableFingerprinting: true
     customCSS: ["css/extended/fix-home-center.css"]
 
   ShowRecentPosts: true

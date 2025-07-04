@@ -2,19 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://massilait.github.io/blog/tags/ai/</loc>
+    <lastmod>2025-07-03T12:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://massilait.github.io/blog/posts/ai_explained_part1/</loc>
+    <lastmod>2025-07-03T12:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://massilait.github.io/blog/</loc>
+    <lastmod>2025-07-03T12:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://massilait.github.io/blog/posts/</loc>
+    <lastmod>2025-07-03T12:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://massilait.github.io/blog/tags/</loc>
+    <lastmod>2025-07-03T12:00:00-04:00</lastmod>
+  </url><url>
     <loc>https://massilait.github.io/blog/tags/beginner/</loc>
     <lastmod>2025-06-15T12:00:00-04:00</lastmod>
   </url><url>
-    <loc>https://massilait.github.io/blog/</loc>
-    <lastmod>2025-06-15T12:00:00-04:00</lastmod>
-  </url><url>
     <loc>https://massilait.github.io/blog/posts/computers_explained/</loc>
-    <lastmod>2025-06-15T12:00:00-04:00</lastmod>
-  </url><url>
-    <loc>https://massilait.github.io/blog/posts/</loc>
-    <lastmod>2025-06-15T12:00:00-04:00</lastmod>
-  </url><url>
-    <loc>https://massilait.github.io/blog/tags/</loc>
     <lastmod>2025-06-15T12:00:00-04:00</lastmod>
   </url><url>
     <loc>https://massilait.github.io/blog/about/</loc>
