@@ -6,8 +6,15 @@
     <description>Recent content on Home</description>
     <generator>Hugo -- 0.147.8</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 15 Jun 2025 12:00:00 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 03 Jul 2025 12:00:00 -0400</lastBuildDate>
     <atom:link href="https://massilait.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>From Linear Models to Neural Networks: When Straight Lines Aren’t Enough</title>
+      <link>https://massilait.github.io/blog/posts/ai_explained_part1/</link>
+      <pubDate>Thu, 03 Jul 2025 12:00:00 -0400</pubDate>
+      <guid>https://massilait.github.io/blog/posts/ai_explained_part1/</guid>
+      <description>This is the first in a three-part series where we build neural networks from the ground up. Today: understanding the problem they were designed to solve.</description>
+    </item>
     <item>
       <title>How Computers Work: From Sand to Microsoft Word</title>
       <link>https://massilait.github.io/blog/posts/computers_explained/</link>
