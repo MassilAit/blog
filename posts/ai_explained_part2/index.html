@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Where Do Loss Functions Come From? A Probabilistic Perspective on Machine Learning | Home</title>
+<meta name="keywords" content="AI">
+<meta name="description" content="This is the second part of our series on neural networks. Today: A probabilistic perspective on machine learning.">
+<meta name="author" content="Massil Ait Abdeslam">
+<link rel="canonical" href="https://massilait.github.io/blog/posts/ai_explained_part2/">
+<link crossorigin="anonymous" href="/blog/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://massilait.github.io/blog/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://massilait.github.io/blog/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://massilait.github.io/blog/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://massilait.github.io/blog/apple-touch-icon.png">
+<link rel="mask-icon" href="https://massilait.github.io/blog/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://massilait.github.io/blog/posts/ai_explained_part2/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+    integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ" crossorigin="anonymous">
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js"
+    integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"
+    crossorigin="anonymous"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+    integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false }
+            ]
+        });
+    });
+</script>
+
+
+<meta property="og:url" content="https://massilait.github.io/blog/posts/ai_explained_part2/">
+  <meta property="og:site_name" content="Home">
+  <meta property="og:title" content="Where Do Loss Functions Come From? A Probabilistic Perspective on Machine Learning">
+  <meta property="og:description" content="This is the second part of our series on neural networks. Today: A probabilistic perspective on machine learning.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-07-09T12:00:00-04:00">
+    <meta property="article:modified_time" content="2025-07-09T12:00:00-04:00">
+    <meta property="article:tag" content="AI">
+    <meta property="og:image" content="https://massilait.github.io/blog/images/ai_explained_part2/cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://massilait.github.io/blog/images/ai_explained_part2/cover.jpg">
+<meta name="twitter:title" content="Where Do Loss Functions Come From? A Probabilistic Perspective on Machine Learning">
+<meta name="twitter:description" content="This is the second part of our series on neural networks. Today: A probabilistic perspective on machine learning.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://massilait.github.io/blog/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Where Do Loss Functions Come From? A Probabilistic Perspective on Machine Learning",
+      "item": "https://massilait.github.io/blog/posts/ai_explained_part2/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Where Do Loss Functions Come From? A Probabilistic Perspective on Machine Learning",
+  "name": "Where Do Loss Functions Come From? A Probabilistic Perspective on Machine Learning",
+  "description": "This is the second part of our series on neural networks. Today: A probabilistic perspective on machine learning.",
+  "keywords": [
+    "AI"
+  ],
+  "articleBody": "Introduction Previously, we saw that machine learning models are designed to approximate functions. For example, the function might detect whether an object is present in an image, predict whether a stock price will rise or fall, and so on. In short, we learned that many tasks can be framed as functions and with enough data, we can train a machine learning model to approximate such a function.\nThis interpretation of machine learning, while useful as an introduction, misses a subtle but important point: we can’t fully model complex phenomena. Let’s revisit the example from the previous post, predicting the price of a house. At first, we assumed the price was entirely determined by its size. That already gave reasonable results, but we saw that we could improve the model by adding more parameters: the number of rooms, year of construction, number of previous owners, etc. Even with all this additional data, the price still depends on countless smaller factors, nuances that are hard, if not impossible, to fully capture. The timing of the sale, the number of interested buyers, neighborhood dynamics, these are difficult to measure yet still influence the final price.\nAnd here lies the key idea we’ll explore today: our models have inherent uncertainty. The assumption that we’re learning a perfectly deterministic function is useful, but incomplete. Instead of learning deterministic functions, our models actually approximate probability distributions, functions that explicitly account for uncertainty and randomness. We will see how this change in perspective allows us to derive our usual loss functions. We’ll see how this probabilistic perspective naturally gives rise to the loss functions we use in machine learning.\nProbability theory Before diving further, let’s review some basic probability concepts and formulas that we’ll use throughout the post.\nProbability distributions A probability distribution is a special kind of mathematical function that models random phenomena. For example, consider rolling a die. The outcome of the roll is what we call a random variable, because we don’t know in advance what value it will take. The probability distribution describes the likelihood of each possible outcome of this random variable. We write it as:\n$$P(X=x)$$\nwhere $X$ is the random variable (the die roll) and $x$ is a particular outcome ($1,2,3,..,6$). For a fair six-sided die, the probability of rolling any number is $\\frac{1}{6}$. For example, the probability of rolling a 5 is written as:\n$$P(X=5)=\\frac{1}{6}$$\nThis formalism may feel excessive for something as simple as a die roll, but it becomes essential when modeling more complex phenomena like predicting weather patterns, estimating disease risks, or forecasting stock market movements.\nIn short, a probability distribution gives the probability of each possible outcome of a random variable.\nConditional probability Often, events are not independent, some phenomena depend on others. For example, your probability of passing an exam depends on whether or not you studied.Let’s formalize this.We define 2 random variables :\n$X$: whether you studied ($X=1$) or not ($X=0$) $Y$: whether you pass ($Y=1$) or fail ($Y=0$) the exam Those two random variables are binary, there are four possible scenarios:\nstudied \u0026 passed studied \u0026 failed didn’t study \u0026 passed didn’t study \u0026 failed We express the probability of $Y$ given $X$, called a conditional probability as:\n$$P(Y=y|X=x)$$\nThis reads: the probability that $Y=y$ (pass/fail) given that $X=x$ (studied or not).\nWe can summarize the conditional probabilities in a table (with hypothetical numbers):\nX=0\rX=1\rY=0\r0.9\r0.2\rY=1\r0.1\r0.8\rNotice that for each row (i.e., fixed $X$), the probabilities add up to 1, since you either pass or fail. Also, it is more likely to fail than pass if you didn’t study (first column), and more likely to pass if you did study (second column).\nThat’s all the probability theory we need for now. These concepts, probability distributions and conditional probabilities, will underpin the rest of our discussion.\nModel In the functional approach, we defined our model as:\n$$Y_{pred}=f(X)$$\nWhere $f(\\cdot)$ is the function learned by the model. In this notation, we implicitly assume that $Y_{pred}$ is certain, we don’t assign any likelihood or uncertainty to a particular output. For example, suppose we want to determine whether an image contains a dog. In the deterministic view, the model simply outputs either “dog” or “no dog.” However, it’s often more informative if the model instead outputs a confidence score, a number that reflects how sure it is about its prediction. For instance:\nIf the model outputs $1$, it’s $100%$ confident that there is a dog. If it outputs $0$, it’s $0%$ confident (i.e. sure there is no dog). Values in between, like $0.85$, indicate high confidence but with some uncertainty. If we still need to make a binary decision, we can set a threshold (e.g., if the output is $\\geq0.5$, predict “dog”; otherwise, predict “no dog”). This probabilistic behavior is closely related to the idea of a conditional probability distribution. Rather than learning a deterministic function $Y_{pred}=f(X)$, the model is actually approximating:\n$$P(Y=y|X=x)$$\nThat is, the probability that $Y=y$ (the image contains a dog) given that we observed $X=x$ (the image itself).\n💡 Note - Bayesian vs frequentist interpretation :\nHere we adopt the Bayesian interpretation of probability, where probability reflects our degree of belief or confidence in an observation. This contrasts with the frequentist interpretation, where probability is defined as the long-run frequency of an event occurring over many trials.The Bayesian interpretation provides better intuition for notions like a 50% probability of rain tomorrow. We can’t repeat tomorrow many times, like rerolling a die, so in this case the probability represents our degree of belief in the event.\nThree types of distributions In machine learning, we typically encounter two kinds of tasks:\nRegression tasks: where we predict a continuous value. Examples: predicting the price of a house, the temperature tomorrow, or the time a runner will finish a race. Classification tasks: where we classify something into categories. Binary classification: predicting one of two outcomes. Example : whether an image contains a dog or not. Multiclass classification: predicting one of several categories. Example: whether an image contains a car, a dog, a house, etc. In this section, we’ll see how these tasks correspond to well-known probability distributions.\nRegression tasks In regression, $Y_{pred}$ can take on a continuum of values for a given $X$. This is modeled by a continuous probability distribution,we most commonly use the normal distribution (also called the Gaussian or bell curve).\nMany natural phenomena follow a normal distribution, such as human heights, test scores on an exam, etc. The prevalence of the normal distribution in nature can be explained by the central limit theorem, which essentially states that the sum of many small, independent effects tends to be normally distributed.(For a great explanation, check out 3Blue1Brown’s video on the central limit theorem.)\nIn this case, our model approximates the following conditional probability distribution :\n$$P(Y=y|X=x)=\\mathcal{N}(\\mu_x, \\sigma^2_x)=\\frac{1}{\\sqrt{2\\pi}\\sigma_x}exp\\left(-\\frac{(y-\\mu_x)^2}{2\\sigma_x^2}\\right)$$\nwhere:\n$\\mu_x$ is the mean (most likely output given $x$) $\\sigma_x^2$ is the variance (how spread out the possible outcomes are around $\\mu_x$) The following figure shows the shape of the normal distribution. We can see that it is centered at $\\mu_x$, and the size of the bell depends on $\\sigma_x$.\nIt’s important to note that for each input $x$, the output $Y$ follows a different normal distribution with its own $\\mu_x$ and $\\sigma_x^2$. However, we’ll see later that we often assume $\\sigma_x^2$ constant (equal to 1) and train the model to predict only $\\mu_x$, since the most likely outcome is given by the mean.\n💡 Note - Probability mass function vs Probability density function\nSince $Y$ is continuous, the normal distribution gives us a probability density function (PDF) rather than the exact probability (probability mass function) of a specific value, which is technically zero. Instead, we talk about the probability of $Y$ falling within an interval $[a,b]$. This is a technicality but still important to mention.\nBinary classification In binary classification, $Y_{pred}$ can only take two values: 0 or 1. Here, we use the Bernoulli distribution, which gives the probability of observing 1 (success) or 0 (failure):\n$$P(Y=y|X=x)=p_x^y(1-p_x)^{1-y}$$\nWhere :\n$p_x$ is the probability of $Y=1$ given $X=x$. $y$: the outcome (0 or 1) So the model actually learns a diffrent $p_{x}$ for each input $x$. Also, note that the probability of $Y=0$ for a given $X=x$ is simply $1−p_x$.\nMulticlass classification In multiclass classification, $Y_{pred}$ can take one of $C$ possible outcomes: $y_1,y_2,…,y_C$. We model this with the categorical distribution, which generalizes the Bernoulli distribution to more than two outcomes. The conditional probability distribution is :\n$$P(Y=y∣X=x)=\\prod_{i=1}^C p_{x,i}^{y_i}$$\nWhere:\n$p_{x,i}$ probability of class $y_i$ given $x$ $y_i$ the outcome for $y_i$ (1 if $y_i$ is the outcome , else 0). We can only have one outcome $y_i$ Also, by definition of probability we need to respect: $$\\sum_{i=1}^C p_{x,i}=1$$\nFor each input $x$, the model learns the full set of probabilities $p_{x,1}, p_{x,2},…, p_{x,C}$, one for each class. In words, the probability of observing $y_i$ given $x$ is $p_{x,i}$, since all other terms are raised to 0.\nFor example, if the we want the probaility of the outcome {y_2} for a given $x$, then :\n$$P(Y=y_2∣X=x)=\\prod_{i=1}^C p_{x,i}^{y_i}=p_{x,1}^0\\cdot p_{x,2}^1\\cdot…\\cdot p_{x,C}^0=p_{x,2}$$\nThis framework, using normal, Bernoulli, or categorical distributions, allows us to view machine learning models as learning to approximate these distributions, depending on the task.\nMaximum Likelihood Here’s where things start to get really interesting: how does our model actually learn the best possible distribution, given enough data? That’s what we’ll cover in this section.\nDefinition In machine learning, our goal is to find the best approximation function so that we can perform well not just on the training data, but also on unseen data. We’ve seen that this amounts to learning the best possible conditional probability distribution:\n$$P(Y=y∣X=x)$$\nThis distribution depends on some parameters, which we’ll denote as $\\theta$. For example:\nIn a normal distribution, $\\theta=(\\mu,\\sigma^2)$, the mean and variance. In a Bernoulli distribution, $\\theta=p$, the probability of success. In a categorical distribution, $\\theta=(p_1,p_2,…,p_C)$, the probabilities of each class. More formally, we write the conditional probability as: $$P(Y=y∣X=x ; θ)$$\nThe probability of observing outcome $y$, given input $x$ and parameters $\\theta$. So our task becomes: Find the parameters $\\theta$ that best explain the data we observed.\nNegative Log Likelihood Suppose we collect a dataset of $N$ observations:\n$$(y_0,x_0),(y_1,x_1),…,(y_N,x_N) $$\nFor a single sample $(y_i,x_i)$ our model assigns the likelihood of observing it as:\n$$P(Y=y_i∣X=x_i;θ)$$\nWe hope this likelihood is high, because if our model represents reality well, then the data we actually observe should appear likely under the model. If the likelihood is low for a data point, there are two possible explanations:\nThe data point is genuinely rare, an unlikely event that we happened to observe by chance. The model parameters $\\theta$ are wrong and don’t accurately reflect the underlying distribution of the data. To evaluate how well the model explains the entire dataset, we assume the data points are independent and compute the likelihood of observing the dataset under the model as the product of the individual probabilities: $$L(\\theta)=\\prod_{i=1}^N P(Y=y_i∣X=x_i;θ)$$\nThis is called the likelihood function, it measures how likely the observed data are under parameters $\\theta$. Again, if this overall likelihood is low, it probably means our parameters $\\theta$ are poorly chosen, because the chance of observing many rare events at once is extremely small. This leads us to the principle of maximum likelihood estimation (MLE): Find the parameters $\\theta$ that make the observed data as likely as possible. Formally:\n$$\\hat{\\theta}=\\arg\\max_{\\theta}\\ L(\\theta)= \\arg\\max_{\\theta}\\ \\prod_{i=1}^N P(Y=y_i∣X=x_i;θ)$$\nIn words: We choose $\\hat{\\theta}$ to maximize the likelihood of the data under the model. In the next section, we’ll see how this MLE principle naturally leads us to the standard loss functions we use in machine learning depending on the task (regression, binary classification, multiclass classification).\nBefore we derive the loss function formulas, there are two additional steps we usually take to make the math easier and more stable. First, since probabilities are always $\\leq 1$, the product of many of them quickly becomes extremely small, which can lead to numerical underflow and make computations tricky. To make the numbers more manageable, we take the logarithm of the likelihood. This also has the bonus property that products turn into sums since $\\log(ab)=\\log(a)+\\log(b)$:\n$$\\log\\left(L(\\theta)\\right)=\\sum_{i=1}^N \\log\\left(P(Y=y_i∣X=x_i;θ)\\right)$$\nSecond, in machine learning, it’s customary to phrase optimization as a minimization problem rather than a maximization one, we typically minimize some notion of “error” or “cost.” To turn our maximization of the log-likelihood into a minimization, we simply take its negative:\n$$NLL(\\theta)=-\\log\\left(L(\\theta)\\right)= -\\sum_{i=1}^N \\log\\left(P(Y=y_i∣X=x_i;θ)\\right)$$\nThis is called the negative log-likelihood (NLL), and minimizing it is equivalent to maximizing the likelihood. It also aligns conceptually with minimizing the error, just like we do with standard loss functions in supervised learning.\nLoss derivation We finally arrive at the point where we can derive the appropriate loss functions for our three types of tasks! From here, you’ll see that the derivations are quite straightforward. Before diving in, let’s quickly recall how the parameters of the distributions are modeled. We saw earlier that the parameters θ of each distribution are:\nIn a normal distribution, $\\theta=(\\mu,\\sigma^2)$, the mean and variance. In a Bernoulli distribution, $\\theta=p$, the probability of success. In a categorical distribution, $\\theta=(p_1,p_2,…,p_C)$, the probabilities of each class. We actually use function approximators, like a linear model or a neural network to learn these parameters! For example, in the regression case, we can write $\\mu_x=f(x)$, where $f(x)$ is the function (e.g., a neural network) that outputs the mean given input $x$. So, our model still learns a function $f(x)$, but instead of predicting the output $Y_{pred}$ directly, it predicts the parameters of the distribution $P(Y∣X)$. This subtle distinction is exactly what motivated the whole probabilistic view of machine learning we’ve been building up to. Now, let’s derive the loss functions for each task.\nBinary Classification In binary classification, we model $P(Y∣X)$ using the Bernoulli distribution:\n$$P(Y=y|X=x)=p_x^y(1-p_x)^{1-y}$$\nWhere $p_x=f(x)$ is the probability of $y=1$ given $x$, predicted by our model.\nThe negative log-likelihood (NLL) is:\n$$NLL(\\theta)=-\\sum_{i=1}^N \\log\\left(P(Y=y_i∣X=x_i;θ)\\right)$$ $$\\Rightarrow NLL(\\theta)=-\\sum_{i=1}^N \\log\\left(f(x_i)^{y_i}(1-f(x_i))^{1-y_i}\\right)$$ $$ \\Rightarrow NLL(\\theta)=-\\sum_{i=1}^N {y_i}\\log\\left(f(x_i)\\right)+(1-y_i)\\log\\left(1-f(x_i)\\right)$$\nThis is exactly the binary cross-entropy loss.\nMulticlass classification In multiclass classification, we model $P(Y∣X)$ using the categorical distribution: $$P(Y=y∣X=x)=\\prod_{j=1}^C p_{x,j}^{y_j}$$\nThe parameters of our distribution are the $C$ probabilities $p_j$, one for each class $j$, representing the probability of observing class $y_j=1$ given the input $X$. Since we need to predict one probability per class, our model must produce a multi-output function, outputting $C$ values at once, one for each class .We can write this conveniently in vector notation: $$\\vec{p_x}=\\vec{f(x)} $$\nWhere $\\vec{f(x)}$ is a vector-valued function approximator (e.g., a neural network), and its j-th component $f_j(x)$ gives the predicted probability $p_{x,j}$ of class $j$. Here, $\\vec{f(x)}$ can still be any function approximator, linear model, neural network, etc. but it must produce a vector of $C$ outputs instead of a single scalar.\nThe NLL becomes:\n$$NLL(\\theta)=-\\sum_{i=1}^N \\log\\left(P(Y=y_i∣X=x_i;θ)\\right)$$ $$\\Rightarrow NLL(\\theta)=-\\sum_{i=1}^N \\log\\left(\\prod_{j=1}^C f_j(x_i)^{y_{i,j}}\\right)$$ $$ \\Rightarrow NLL(\\theta)=-\\sum_{i=1}^N \\sum_{j=1}^C y_{i,j}\\log\\left(f_j(x_i)\\right)$$\nIn some resources, the second sum is sometimes omitted because all the $y_{i,j}$ are zero except for the observed class. When we sample, we only observe one class; so across all $C$ classes, only the outcome for the observed class is one. Thus, we can also write more compactly the NLL as:\n$$NLL(\\theta)=-\\sum_{i=1}^N \\log\\left(f_{y_i}(x_i)\\right)$$\nIn both notation, this is the standard categorical cross-entropy loss.\nRegression task For regression, we model $P(Y∣X)$ using the normal distribution:\n$$P(Y=y|X=x)=\\frac{1}{\\sqrt{2\\pi}\\sigma_x}exp\\left(-\\frac{(y-\\mu_x)^2}{2\\sigma_x^2}\\right)$$\nHere, the parameters of the distribution are $\\mu_x$ and $\\sigma_x^2$, the mean and variance. In most applications, however, we don’t really care about the variance, because we’re usually interested in predicting the most likely outcome and for a normal distribution, this is simply the mean $\\mu_x$ So, in practice, we often assume that the variance $\\sigma_x^2$ is constant (equal to 1) and focus only on learning the correct $\\mu_x$. We model this as:\n$$\\mu_x=f(x)$$\nWhere $f(x)$ is our function approximator (e.g., a neural network) that predicts the mean of the distribution for a given $x$. We can now derive the loss function by taking the negative log-likelihood (NLL):\n$$NLL(\\theta)=-\\sum_{i=1}^N \\log\\left(P(Y=y_i∣X=x_i;θ)\\right)$$ $$\\Rightarrow NLL(\\theta)=-\\sum_{i=1}^N \\log\\left(\\frac{1}{\\sqrt{2\\pi}}exp\\left(-\\frac{(y_i-f(x_i))^2}{2}\\right)\\right)$$ $$ \\Rightarrow NLL(\\theta)=-\\sum_{i=1}^N \\log\\left(\\frac{1}{\\sqrt{2\\pi}}\\right)+ \\frac{1}{2}\\sum_{i=1}^N(y_i-f(x_i))^2$$\nWe can see that this expression contains some constant terms that don’t depend on the model parameters and therefore don’t influence the optimization. We can safely drop these constants since they don’t affect where the minimum occurs. What remains is :\n$$ Loss(\\theta)=\\sum_{i=1}^N(y_i-f(x_i))^2$$\nThis is known as the mean squared error (MSE) loss.\n💡 Note - Averaged Losses\nYou’ll often see these losses averaged over the dataset (dividing by N). While this isn’t strictly necessary (since the minimum stays the same), it makes the loss scale-independent and helps optimization behave more smoothly.\nConclusion With all this, you can see why we often say that probability theory is at the heart of machine learning. We derived the most common loss functions, binary cross-entropy, categorical cross-entropy, and mean squared error, directly from probabilistic principles. What we’ve covered here is just the beginning. More advanced models and architectures build on these ideas and use even richer probabilistic concepts to tackle more complex tasks. Generative models especially rely on more advanced probabilistic modeling. I didn’t cover some important concepts used in generative models, such as KL-divergence or ELBO, in order to keep this post accessible, these might be the subject of another post in the future.\nI hope you enjoyed the read, and thanks again for taking the time to go through my post!\nMassil Ait Abdeslam\n",
+  "wordCount" : "2898",
+  "inLanguage": "en",
+  "image":"https://massilait.github.io/blog/images/ai_explained_part2/cover.jpg","datePublished": "2025-07-09T12:00:00-04:00",
+  "dateModified": "2025-07-09T12:00:00-04:00",
+  "author":{
+    "@type": "Person",
+    "name": "Massil Ait Abdeslam"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://massilait.github.io/blog/posts/ai_explained_part2/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Home",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://massilait.github.io/blog/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://massilait.github.io/blog/" accesskey="h" title="Home (Alt + H)">Home</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://massilait.github.io/blog/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://massilait.github.io/blog/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Where Do Loss Functions Come From? A Probabilistic Perspective on Machine Learning
+    </h1>
+    <div class="post-description">
+      This is the second part of our series on neural networks. Today: A probabilistic perspective on machine learning.
+    </div>
+    <div class="post-meta"><span title='2025-07-09 12:00:00 -0400 EDT'>July 9, 2025</span>&nbsp;·&nbsp;14 min&nbsp;·&nbsp;Massil Ait Abdeslam
+
+</div>
+  </header> 
+<figure class="entry-cover">
+        <img loading="eager" src="https://massilait.github.io/blog/images/ai_explained_part2/cover.jpg" alt="A cover picture with dices">
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#introduction" aria-label="Introduction">Introduction</a></li>
+                <li>
+                    <a href="#probability-theory" aria-label="Probability theory">Probability theory</a><ul>
+                        
+                <li>
+                    <a href="#probability-distributions" aria-label="Probability distributions">Probability distributions</a></li>
+                <li>
+                    <a href="#conditional-probability" aria-label="Conditional probability">Conditional probability</a></li></ul>
+                </li>
+                <li>
+                    <a href="#model" aria-label="Model">Model</a></li>
+                <li>
+                    <a href="#three-types-of-distributions" aria-label="Three types of distributions">Three types of distributions</a><ul>
+                        
+                <li>
+                    <a href="#regression-tasks" aria-label="Regression tasks">Regression tasks</a></li>
+                <li>
+                    <a href="#binary-classification" aria-label="Binary classification">Binary classification</a></li>
+                <li>
+                    <a href="#multiclass-classification" aria-label="Multiclass classification">Multiclass classification</a></li></ul>
+                </li>
+                <li>
+                    <a href="#maximum-likelihood" aria-label="Maximum Likelihood">Maximum Likelihood</a><ul>
+                        
+                <li>
+                    <a href="#definition" aria-label="Definition">Definition</a><ul>
+                        
+                <li>
+                    <a href="#negative-log-likelihood" aria-label="Negative Log Likelihood">Negative Log Likelihood</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#loss-derivation" aria-label="Loss derivation">Loss derivation</a><ul>
+                        
+                <li>
+                    <a href="#binary-classification-1" aria-label="Binary Classification">Binary Classification</a></li>
+                <li>
+                    <a href="#multiclass-classification-1" aria-label="Multiclass classification">Multiclass classification</a></li>
+                <li>
+                    <a href="#regression-task" aria-label="Regression task">Regression task</a></li></ul>
+                </li>
+                <li>
+                    <a href="#conclusion" aria-label="Conclusion">Conclusion</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="introduction">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h1>
+<p>Previously, we saw that machine learning models are designed to approximate functions. For example, the function might detect whether an object is present in an image, predict whether a stock price will rise or fall, and so on. In short, we learned that many tasks can be framed as functions  and with enough data, we can train a machine learning model to approximate such a function.</p>
+<p>This interpretation of machine learning, while useful as an introduction, misses a subtle but important point: we can’t fully model complex phenomena. Let’s revisit the example from the previous post, predicting the price of a house. At first, we assumed the price was entirely determined by its size. That already gave reasonable results, but we saw that we could improve the model by adding more parameters: the number of rooms, year of construction, number of previous owners, etc. Even with all this additional data, the price still depends on countless smaller factors, nuances that are hard, if not impossible, to fully capture. The timing of the sale, the number of interested buyers, neighborhood dynamics, these are difficult to measure yet still influence the final price.</p>
+<p>And here lies the key idea we’ll explore today: our models have inherent uncertainty. The assumption that we’re learning a perfectly deterministic function is useful, but incomplete. Instead of learning deterministic functions, our models actually approximate probability distributions, functions that explicitly account for uncertainty and randomness. We will see how this change in perspective allows us to derive our usual loss functions. We’ll see how this probabilistic perspective naturally gives rise to the loss functions we use in machine learning.</p>
+<h1 id="probability-theory">Probability theory<a hidden class="anchor" aria-hidden="true" href="#probability-theory">#</a></h1>
+<p>Before diving further, let’s review some basic probability concepts and formulas that we’ll use throughout the post.</p>
+<h2 id="probability-distributions">Probability distributions<a hidden class="anchor" aria-hidden="true" href="#probability-distributions">#</a></h2>
+<p>A probability distribution is a special kind of mathematical function that models random phenomena. For example, consider rolling a die. The outcome of the roll is what we call a random variable, because we don’t know in advance what value it will take. The probability distribution describes the likelihood of each possible outcome of this random variable. We write it as:</p>
+<p>$$P(X=x)$$</p>
+<p>where $X$ is the random variable (the die roll) and $x$ is a particular outcome ($1,2,3,..,6$). For a fair six-sided die, the probability of rolling any number is $\frac{1}{6}$. For example, the probability of rolling a 5 is written as:</p>
+<p>$$P(X=5)=\frac{1}{6}$$</p>
+<p>This formalism may feel excessive for something as simple as a die roll, but it becomes essential when modeling more complex phenomena like predicting weather patterns, estimating disease risks, or forecasting stock market movements.</p>
+<p>In short, a probability distribution gives the probability of each possible outcome of a random variable.</p>
+<h2 id="conditional-probability">Conditional probability<a hidden class="anchor" aria-hidden="true" href="#conditional-probability">#</a></h2>
+<p>Often, events are not independent, some phenomena depend on others. For example, your probability of passing an exam depends on whether or not you studied.Let’s formalize this.We define 2 random variables :</p>
+<ul>
+<li>$X$: whether you studied ($X=1$) or not ($X=0$)</li>
+<li>$Y$: whether you pass ($Y=1$) or fail ($Y=0$) the exam</li>
+</ul>
+<p>Those two random variables are binary, there are four possible scenarios:</p>
+<ul>
+<li>studied &amp; passed</li>
+<li>studied &amp; failed</li>
+<li>didn’t study &amp; passed</li>
+<li>didn’t study &amp; failed</li>
+</ul>
+<p>We express the probability of $Y$ given $X$, called a <strong>conditional probability</strong> as:</p>
+<p>$$P(Y=y|X=x)$$</p>
+<p>This reads: <em>the probability that $Y=y$ (pass/fail) given that $X=x$ (studied or not)</em>.</p>
+<p>We can summarize the conditional probabilities in a table (with hypothetical numbers):</p>
+<table style="
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: block !important;
+  width: fit-content !important;
+  border-collapse: collapse;
+  text-align: center;
+">
+  <thead>
+    <tr>
+      <th></th>
+      <th style="padding: 8px;">X=0</th>
+      <th style="padding: 8px;">X=1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th style="padding: 8px;">Y=0</th>
+      <td style="padding: 8px;">0.9</td>
+      <td style="padding: 8px;">0.2</td>
+    </tr>
+    <tr>
+      <th style="padding: 8px;">Y=1</th>
+      <td style="padding: 8px;">0.1</td>
+      <td style="padding: 8px;">0.8</td>
+    </tr>
+  </tbody>
+</table>
+<p>Notice that for each row (i.e., fixed $X$), the probabilities add up to 1, since you either pass or fail. Also, it is more likely to fail than pass if you didn’t study (first column), and more likely to pass if you did study (second column).</p>
+<p>That’s all the probability theory we need for now. These concepts, probability distributions and conditional probabilities, will underpin the rest of our discussion.</p>
+<h1 id="model">Model<a hidden class="anchor" aria-hidden="true" href="#model">#</a></h1>
+<p>In the functional approach, we defined our model as:</p>
+<p>$$Y_{pred}=f(X)$$</p>
+<p>Where $f(\cdot)$ is the function learned by the model. In this notation, we implicitly assume that $Y_{pred}$ is certain, we don’t assign any likelihood or uncertainty to a particular output. For example, suppose we want to determine whether an image contains a dog. In the deterministic view, the model simply outputs either “dog” or “no dog.” However, it’s often more informative if the model instead outputs a confidence score, a number that reflects how sure it is about its prediction. For instance:</p>
+<ul>
+<li>If the model outputs $1$, it’s $100%$ confident that there is a dog.</li>
+<li>If it outputs $0$, it’s $0%$ confident (i.e. sure there is no dog).</li>
+<li>Values in between, like $0.85$, indicate high confidence but with some uncertainty.</li>
+</ul>
+<p>If we still need to make a binary decision, we can set a threshold (e.g., if the output is $\geq0.5$, predict “dog”; otherwise, predict “no dog”). This probabilistic behavior is closely related to the idea of a conditional probability distribution. Rather than learning a deterministic function $Y_{pred}=f(X)$, the model is actually approximating:</p>
+<p>$$P(Y=y|X=x)$$</p>
+<p>That is, the probability that $Y=y$ (the image contains a dog) given that we observed $X=x$ (the image itself).</p>
+<blockquote>
+<p><strong>💡 Note - Bayesian vs frequentist interpretation :</strong></p>
+<p><em>Here we adopt the Bayesian interpretation of probability, where probability reflects our degree of belief or confidence in an observation. This contrasts with the frequentist interpretation, where probability is defined as the long-run frequency of an event occurring over many trials.The Bayesian interpretation provides better intuition for notions like a 50% probability of rain tomorrow. We can’t repeat tomorrow many times, like rerolling a die, so in this case the probability represents our degree of belief in the event.</em></p></blockquote>
+<h1 id="three-types-of-distributions">Three types of distributions<a hidden class="anchor" aria-hidden="true" href="#three-types-of-distributions">#</a></h1>
+<p>In machine learning, we typically encounter two kinds of tasks:</p>
+<ol>
+<li><strong>Regression tasks</strong>: where we predict a continuous value. Examples: predicting the price of a house, the temperature tomorrow, or the time a runner will finish a race.</li>
+<li>Classification tasks: where we classify something into categories.
+<ul>
+<li><strong>Binary classification</strong>: predicting one of two outcomes. Example : whether an image contains a dog or not.</li>
+<li><strong>Multiclass classification</strong>: predicting one of several categories. Example: whether an image contains a car, a dog, a house, etc.</li>
+</ul>
+</li>
+</ol>
+<p>In this section, we’ll see how these tasks correspond to well-known probability distributions.</p>
+<h2 id="regression-tasks">Regression tasks<a hidden class="anchor" aria-hidden="true" href="#regression-tasks">#</a></h2>
+<p>In regression, $Y_{pred}$ can take on a continuum of values for a given $X$. This is modeled by a continuous probability distribution,we most commonly use the normal distribution (also called the Gaussian or bell curve).</p>
+<p>Many natural phenomena follow a normal distribution, such as human heights, test scores on an exam, etc. The prevalence of the normal distribution in nature can be explained by the central limit theorem, which essentially states that the sum of many small, independent effects tends to be normally distributed.(For a great explanation, check out 3Blue1Brown’s <a href="https://www.youtube.com/watch?v=zeJD6dqJ5lo&amp;ab_channel=3Blue1Brown">video</a> on the central limit theorem.)</p>
+<p>In this case, our model approximates the following conditional probability distribution :</p>
+<p>$$P(Y=y|X=x)=\mathcal{N}(\mu_x, \sigma^2_x)=\frac{1}{\sqrt{2\pi}\sigma_x}exp\left(-\frac{(y-\mu_x)^2}{2\sigma_x^2}\right)$$</p>
+<p>where:</p>
+<ul>
+<li>$\mu_x$ is the mean (most likely output given $x$)</li>
+<li>$\sigma_x^2$ is the variance (how spread out the possible outcomes are around $\mu_x$)</li>
+</ul>
+<p>The following figure shows the shape of the normal distribution. We can see that it is centered at $\mu_x$, and the size of the bell depends on $\sigma_x$.</p>
+<img src="/blog/images/ai_explained_part2/normal.png" alt="Alt text" width="70%" style="display: block; margin: auto; padding-bottom: 20px">
+<p>It’s important to note that for each input $x$, the output $Y$ follows a <strong>different</strong> normal distribution with its own $\mu_x$ and $\sigma_x^2$. However, we’ll see later that we often assume $\sigma_x^2$ constant (equal to 1) and train the model to predict only $\mu_x$, since the most likely outcome is given by the mean.</p>
+<blockquote>
+<p><strong>💡 Note - Probability mass function vs Probability density function</strong></p>
+<p><em>Since $Y$ is continuous, the normal distribution gives us a probability density function (PDF) rather than the exact probability (probability mass function) of a specific value, which is technically zero. Instead, we talk about the probability of $Y$ falling within an interval $[a,b]$. This is a technicality but still important to mention.</em></p></blockquote>
+<h2 id="binary-classification">Binary classification<a hidden class="anchor" aria-hidden="true" href="#binary-classification">#</a></h2>
+<p>In binary classification, $Y_{pred}$ can only take two values: 0 or 1. Here, we use the Bernoulli distribution, which gives the probability of observing 1 (success) or 0 (failure):</p>
+<p>$$P(Y=y|X=x)=p_x^y(1-p_x)^{1-y}$$</p>
+<p>Where :</p>
+<ul>
+<li>$p_x$ is the probability of $Y=1$ given $X=x$.</li>
+<li>$y$: the outcome (0 or 1)</li>
+</ul>
+<p>So the model actually learns a diffrent $p_{x}$ for each input $x$. Also, note that the probability of $Y=0$ for a given $X=x$ is simply $1−p_x$.</p>
+<h2 id="multiclass-classification">Multiclass classification<a hidden class="anchor" aria-hidden="true" href="#multiclass-classification">#</a></h2>
+<p>In multiclass classification, $Y_{pred}$ can take one of $C$ possible outcomes: $y_1,y_2,…,y_C$. We model this with the categorical distribution, which generalizes the Bernoulli distribution to more than two outcomes. The conditional probability distribution is :</p>
+<p>$$P(Y=y∣X=x)=\prod_{i=1}^C p_{x,i}^{y_i}$$</p>
+<p>Where:</p>
+<ul>
+<li>$p_{x,i}$ probability of class $y_i$ given $x$</li>
+<li>$y_i$  the outcome for $y_i$ (1 if $y_i$ is the outcome , else 0). We can only have one outcome $y_i$</li>
+</ul>
+<p>Also, by definition of probability we need to respect:
+$$\sum_{i=1}^C p_{x,i}=1$$</p>
+<p>For each input $x$, the model learns the full set of probabilities $p_{x,1}, p_{x,2},&hellip;, p_{x,C}$, one for each class.
+In words, the probability of observing $y_i$  given $x$ is $p_{x,i}$, since all other terms are raised to 0.</p>
+<p>For example, if the we want the probaility of the outcome {y_2} for a given $x$, then :</p>
+<p>$$P(Y=y_2∣X=x)=\prod_{i=1}^C p_{x,i}^{y_i}=p_{x,1}^0\cdot p_{x,2}^1\cdot&hellip;\cdot p_{x,C}^0=p_{x,2}$$</p>
+<p>This framework, using normal, Bernoulli, or categorical distributions, allows us to view machine learning models as learning to approximate these distributions, depending on the task.</p>
+<h1 id="maximum-likelihood">Maximum Likelihood<a hidden class="anchor" aria-hidden="true" href="#maximum-likelihood">#</a></h1>
+<p>Here’s where things start to get really interesting: how does our model actually learn the best possible distribution, given enough data? That’s what we’ll cover in this section.</p>
+<h2 id="definition">Definition<a hidden class="anchor" aria-hidden="true" href="#definition">#</a></h2>
+<p>In machine learning, our goal is to find the best approximation function so that we can perform well not just on the training data, but also on unseen data. We’ve seen that this amounts to learning the best possible conditional probability distribution:</p>
+<p>$$P(Y=y∣X=x)$$</p>
+<p>This distribution depends on some parameters, which we’ll denote as $\theta$.
+For example:</p>
+<ul>
+<li>In a normal distribution, $\theta=(\mu,\sigma^2)$, the mean and variance.</li>
+<li>In a Bernoulli distribution, $\theta=p$, the probability of success.</li>
+<li>In a categorical distribution, $\theta=(p_1,p_2,…,p_C)$, the probabilities of each class.</li>
+</ul>
+<p>More formally, we write the conditional probability as:
+$$P(Y=y∣X=x ; θ)$$</p>
+<p>The probability of observing outcome $y$, given input $x$ and parameters $\theta$. So our task becomes: Find the parameters $\theta$ that best explain the data we observed.</p>
+<h3 id="negative-log-likelihood">Negative Log Likelihood<a hidden class="anchor" aria-hidden="true" href="#negative-log-likelihood">#</a></h3>
+<p>Suppose we collect a dataset of $N$ observations:</p>
+<p>$$(y_0,x_0),(y_1,x_1),…,(y_N,x_N) $$</p>
+<p>For a single sample $(y_i,x_i)$ our model assigns the likelihood of observing it as:</p>
+<p>$$P(Y=y_i∣X=x_i;θ)$$</p>
+<p>We hope this likelihood is high, because if our model represents reality well, then the data we actually observe should appear likely under the model. If the likelihood is low for a data point, there are two possible explanations:</p>
+<ol>
+<li>The data point is genuinely rare, an unlikely event that we happened to observe by chance.</li>
+<li>The model parameters $\theta$ are wrong and don’t accurately reflect the underlying distribution of the data.</li>
+</ol>
+<p>To evaluate how well the model explains the entire dataset, we assume the data points are independent and compute the likelihood of observing the dataset under the model as the product of the individual probabilities:
+$$L(\theta)=\prod_{i=1}^N P(Y=y_i∣X=x_i;θ)$$</p>
+<p>This is called the likelihood function, it measures how likely the observed data are under parameters $\theta$. Again, if this overall likelihood is low, it probably means our parameters $\theta$ are poorly chosen, because the chance of observing many rare events at once is extremely small. This leads us to the principle of maximum likelihood estimation (MLE): Find the parameters $\theta$ that make the observed data as likely as possible. Formally:</p>
+<p>$$\hat{\theta}=\arg\max_{\theta}\ L(\theta)= \arg\max_{\theta}\ \prod_{i=1}^N P(Y=y_i∣X=x_i;θ)$$</p>
+<p>In words: We choose $\hat{\theta}$ to maximize the likelihood of the data under the model. In the next section, we’ll see how this MLE principle naturally leads us to the standard loss functions we use in machine learning depending on the task (regression, binary classification, multiclass classification).</p>
+<p>Before we derive the loss function formulas, there are two additional steps we usually take to make the math easier and more stable. First, since probabilities are always $\leq 1$, the product of many of them quickly becomes extremely small, which can lead to numerical underflow and make computations tricky. To make the numbers more manageable, we take the logarithm of the likelihood. This also has the bonus property that products turn into sums since $\log(ab)=\log(a)+\log(b)$:</p>
+<p>$$\log\left(L(\theta)\right)=\sum_{i=1}^N \log\left(P(Y=y_i∣X=x_i;θ)\right)$$</p>
+<p>Second, in machine learning, it’s customary to phrase optimization as a minimization problem rather than a maximization one, we typically minimize some notion of “error” or “cost.” To turn our maximization of the log-likelihood into a minimization, we simply take its negative:</p>
+<p>$$NLL(\theta)=-\log\left(L(\theta)\right)= -\sum_{i=1}^N \log\left(P(Y=y_i∣X=x_i;θ)\right)$$</p>
+<p>This is called the negative log-likelihood (NLL), and minimizing it is equivalent to maximizing the likelihood. It also aligns conceptually with minimizing the error, just like we do with standard loss functions in supervised learning.</p>
+<h1 id="loss-derivation">Loss derivation<a hidden class="anchor" aria-hidden="true" href="#loss-derivation">#</a></h1>
+<p>We finally arrive at the point where we can derive the appropriate loss functions for our three types of tasks! From here, you’ll see that the derivations are quite straightforward. Before diving in, let’s quickly recall how the parameters of the distributions are modeled. We saw earlier that the parameters θ of each distribution are:</p>
+<ul>
+<li>In a normal distribution, $\theta=(\mu,\sigma^2)$, the mean and variance.</li>
+<li>In a Bernoulli distribution, $\theta=p$, the probability of success.</li>
+<li>In a categorical distribution, $\theta=(p_1,p_2,…,p_C)$, the probabilities of each class.</li>
+</ul>
+<p>We actually use function approximators, like a linear model or a neural network to learn these parameters! For example, in the regression case, we can write $\mu_x=f(x)$, where $f(x)$ is the function (e.g., a neural network) that outputs the mean given input $x$. So, our model still learns a function $f(x)$, but instead of predicting the output $Y_{pred}$ directly, it predicts the parameters of the distribution $P(Y∣X)$. This subtle distinction is exactly what motivated the whole probabilistic view of machine learning we’ve been building up to. Now, let’s derive the loss functions for each task.</p>
+<h2 id="binary-classification-1">Binary Classification<a hidden class="anchor" aria-hidden="true" href="#binary-classification-1">#</a></h2>
+<p>In binary classification, we model $P(Y∣X)$ using the Bernoulli distribution:</p>
+<p>$$P(Y=y|X=x)=p_x^y(1-p_x)^{1-y}$$</p>
+<p>Where $p_x=f(x)$ is the probability of $y=1$ given $x$, predicted by our model.</p>
+<p>The negative log-likelihood (NLL) is:</p>
+<p>$$NLL(\theta)=-\sum_{i=1}^N \log\left(P(Y=y_i∣X=x_i;θ)\right)$$
+$$\Rightarrow NLL(\theta)=-\sum_{i=1}^N \log\left(f(x_i)^{y_i}(1-f(x_i))^{1-y_i}\right)$$
+$$ \Rightarrow NLL(\theta)=-\sum_{i=1}^N {y_i}\log\left(f(x_i)\right)+(1-y_i)\log\left(1-f(x_i)\right)$$</p>
+<p>This is exactly the binary cross-entropy loss.</p>
+<h2 id="multiclass-classification-1">Multiclass classification<a hidden class="anchor" aria-hidden="true" href="#multiclass-classification-1">#</a></h2>
+<p>In multiclass classification, we model $P(Y∣X)$ using the categorical distribution:
+$$P(Y=y∣X=x)=\prod_{j=1}^C p_{x,j}^{y_j}$$</p>
+<p>The parameters of our distribution are the $C$ probabilities $p_j$, one for each class $j$, representing the probability of observing class $y_j=1$ given the input $X$. Since we need to predict one probability per class, our model must produce a multi-output function, outputting $C$ values at once, one for each class .We can write this conveniently in vector notation:
+$$\vec{p_x}=\vec{f(x)} $$</p>
+<p>Where $\vec{f(x)}$  is a vector-valued function approximator (e.g., a neural network), and its j-th component $f_j(x)$ gives the predicted probability $p_{x,j}$ of class $j$. Here, $\vec{f(x)}$ can still be any function approximator, linear model, neural network, etc. but it must produce a vector of $C$ outputs instead of a single scalar.</p>
+<p>The NLL becomes:</p>
+<p>$$NLL(\theta)=-\sum_{i=1}^N \log\left(P(Y=y_i∣X=x_i;θ)\right)$$
+$$\Rightarrow NLL(\theta)=-\sum_{i=1}^N \log\left(\prod_{j=1}^C f_j(x_i)^{y_{i,j}}\right)$$
+$$ \Rightarrow NLL(\theta)=-\sum_{i=1}^N \sum_{j=1}^C y_{i,j}\log\left(f_j(x_i)\right)$$</p>
+<p>In some resources, the second sum is sometimes omitted because all the $y_{i,j}$ are zero except for the observed class. When we sample, we only observe one class; so across all $C$ classes, only the outcome for the observed class is one. Thus, we can also write more compactly the NLL as:</p>
+<p>$$NLL(\theta)=-\sum_{i=1}^N \log\left(f_{y_i}(x_i)\right)$$</p>
+<p>In both notation, this is the standard categorical cross-entropy loss.</p>
+<h2 id="regression-task">Regression task<a hidden class="anchor" aria-hidden="true" href="#regression-task">#</a></h2>
+<p>For regression, we model $P(Y∣X)$ using the normal distribution:</p>
+<p>$$P(Y=y|X=x)=\frac{1}{\sqrt{2\pi}\sigma_x}exp\left(-\frac{(y-\mu_x)^2}{2\sigma_x^2}\right)$$</p>
+<p>Here, the parameters of the distribution are $\mu_x$ and $\sigma_x^2$, the mean and variance. In most applications, however, we don’t really care about the variance, because we’re usually interested in predicting the most likely outcome and for a normal distribution, this is simply the mean $\mu_x$ So, in practice, we often assume that the variance $\sigma_x^2$ is constant (equal to 1) and focus only on learning the correct $\mu_x$. We model this as:</p>
+<p>$$\mu_x=f(x)$$</p>
+<p>Where $f(x)$ is our function approximator (e.g., a neural network) that predicts the mean of the distribution for a given $x$. We can now derive the loss function by taking the negative log-likelihood (NLL):</p>
+<p>$$NLL(\theta)=-\sum_{i=1}^N \log\left(P(Y=y_i∣X=x_i;θ)\right)$$
+$$\Rightarrow NLL(\theta)=-\sum_{i=1}^N \log\left(\frac{1}{\sqrt{2\pi}}exp\left(-\frac{(y_i-f(x_i))^2}{2}\right)\right)$$
+$$ \Rightarrow NLL(\theta)=-\sum_{i=1}^N \log\left(\frac{1}{\sqrt{2\pi}}\right)+ \frac{1}{2}\sum_{i=1}^N(y_i-f(x_i))^2$$</p>
+<p>We can see that this expression contains some constant terms that don’t depend on the model parameters and therefore don’t influence the optimization. We can safely drop these constants since they don’t affect where the minimum occurs. What remains is :</p>
+<p>$$ Loss(\theta)=\sum_{i=1}^N(y_i-f(x_i))^2$$</p>
+<p>This is known as the mean squared error (MSE) loss.</p>
+<blockquote>
+<p><strong>💡 Note - Averaged Losses</strong></p>
+<p><em>You’ll often see these losses averaged over the dataset (dividing by N).
+While this isn’t strictly necessary (since the minimum stays the same), it makes the loss scale-independent and helps optimization behave more smoothly.</em></p></blockquote>
+<h1 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h1>
+<p>With all this, you can see why we often say that probability theory is at the heart of machine learning. We derived the most common loss functions, binary cross-entropy, categorical cross-entropy, and mean squared error,  directly from probabilistic principles. What we’ve covered here is just the beginning. More advanced models and architectures build on these ideas and use even richer probabilistic concepts to tackle more complex tasks. Generative models especially rely on more advanced probabilistic modeling. I didn’t cover some important concepts used in generative models, such as KL-divergence or ELBO, in order to keep this post accessible, these might be the subject of another post in the future.</p>
+<p>I hope you enjoyed the read, and thanks again for taking the time to go through my post!</p>
+<p>Massil Ait Abdeslam</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://massilait.github.io/blog/tags/ai/">AI</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://massilait.github.io/blog/">Home</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
