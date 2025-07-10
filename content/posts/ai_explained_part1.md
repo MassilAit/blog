@@ -219,7 +219,7 @@ So with the gradient, we have a way to get to the minimum of the loss function. 
 
 $$\frac{\partial L(w,b)}{\partial w}=\frac{1}{N}\sum_{i=1}^{N}-2(Y_i-(w \cdot X_i +b))X_i= -\frac{2}{N}\sum_{i=1}^{N}(Y_i-\hat{Y_i})X_i$$
 
-$$\frac{\partial L(w,b)}{\partial w}=\frac{1}{N}\sum_{i=1}^{N}-2(Y_i-(w \cdot X_i +b))= -\frac{2}{N}\sum_{i=1}^{N}(Y_i-\hat{Y_i})$$
+$$\frac{\partial L(w,b)}{\partial b}=\frac{1}{N}\sum_{i=1}^{N}-2(Y_i-(w \cdot X_i +b))= -\frac{2}{N}\sum_{i=1}^{N}(Y_i-\hat{Y_i})$$
 
 These gradients tell us how to adjust $w$ and $b$ step by step to move toward the minimum of the loss function.
 
@@ -258,7 +258,7 @@ We compute the gradient using our formulas :
 
 $$\frac{\partial L(w,b)}{\partial w}= -\frac{2}{N}\sum_{i=1}^{N}(Y_i-\hat{Y_i})X_i = -231362061$$
 
-$$\frac{\partial L(w,b)}{\partial w}= -\frac{2}{N}\sum_{i=1}^{N}(Y_i-\hat{Y_i}) = -1097369$$
+$$\frac{\partial L(w,b)}{\partial b}= -\frac{2}{N}\sum_{i=1}^{N}(Y_i-\hat{Y_i}) = -1097369$$
 
 **3. Update step**
 
@@ -267,7 +267,7 @@ Notice that the gradients are quite large. Instead of moving fully in the gradie
 We update the parameters as follows:
 
 $$w=w-\eta \frac{\partial L(w,b)}{\partial w} = 2801.3$$
-$$w=b-\eta \frac{\partial L(w,b)}{\partial b} = -127.3$$
+$$b=b-\eta \frac{\partial L(w,b)}{\partial b} = -127.3$$
 
 We now get this curve :
 
